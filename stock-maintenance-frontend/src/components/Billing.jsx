@@ -169,8 +169,30 @@ function Billing() {
       }
 
       setSuccessBill(responseData);
-      setCart([]);
-      setSearchTerm("");
+        setCart([]);
+
+        setProducts((currentProducts) =>
+        currentProducts.map((product) => {
+            const soldItem = cart.find(
+            (item) => item.productID === product.productID
+            );
+
+            if (!soldItem) {
+            return product;
+            }
+
+            return {
+            ...product,
+            inventory: {
+                ...product.inventory,
+                stockQuantity:
+                product.inventory.stockQuantity - soldItem.quantity,
+            },
+            };
+        })
+        );
+
+        setSearchTerm("");
     } catch (requestError) {
       setError(
         requestError.message ||
