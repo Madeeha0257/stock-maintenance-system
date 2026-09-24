@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Billing from "./components/Billing";
 import Dashboard from "./components/Dashboard";
 import Sales from "./components/Sales";
+import Customers from "./components/Customers";
 import "./App.css";
 
 function App() {
@@ -174,11 +175,7 @@ function App() {
           </div>
         )}
 
-        {page === "customers" && (
-          <div className="page-message">
-            Customer Management will be implemented later.
-          </div>
-        )}
+        {page === "customers" && <Customers />}
 
         {page === "purchase-orders" && isOwner && (
           <div className="page-message">

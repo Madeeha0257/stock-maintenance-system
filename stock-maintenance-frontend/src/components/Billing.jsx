@@ -5,6 +5,8 @@ function Billing() {
   const [searchTerm, setSearchTerm] = useState("");
   const [cart, setCart] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [customers, setCustomers] = useState([]);
+  const [selectedCustomerID, setSelectedCustomerID] = useState("");
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
@@ -31,6 +33,23 @@ function Billing() {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+  fetch("/api/customers")
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error("Unable to load customers.");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      setCustomers(data);
+    })
+    .catch(() => {
+      setError("Unable to load customers.");
+    });
+}, []);
 
   const getStockQuantity = (product) => {
     return product.inventory?.stockQuantity ?? 0;
@@ -152,11 +171,14 @@ function Billing() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items: cart.map((item) => ({
+        items: cart.map((item) => ({
             productID: item.productID,
             quantity: item.quantity,
-          })),
-          paymentMethod,
+        })),
+        paymentMethod,
+        customerID: selectedCustomerID
+            ? Number(selectedCustomerID)
+            : null,
         }),
       });
 
@@ -170,6 +192,7 @@ function Billing() {
 
       setSuccessBill(responseData);
         setCart([]);
+        setSelectedCustomerID("");
 
         setProducts((currentProducts) =>
         currentProducts.map((product) => {
@@ -342,6 +365,29 @@ function Billing() {
                 <span>Total Amount</span>
                 <strong>₹{totalAmount.toFixed(2)}</strong>
               </div>
+
+              <div className="payment-section">
+                <label htmlFor="customer">Customer (Optional)</label>
+
+                <select
+                    id="customer"
+                    value={selectedCustomerID}
+                    onChange={(event) =>
+                    setSelectedCustomerID(event.target.value)
+                    }
+                >
+                    <option value="">Walk-in Customer</option>
+
+                    {customers.map((customer) => (
+                    <option
+                        key={customer.customerID}
+                        value={customer.customerID}
+                    >
+                        {customer.customerName} - {customer.phone}
+                    </option>
+                    ))}
+                </select>
+                </div>
 
               <div className="payment-section">
                 <label htmlFor="paymentMethod">Payment Method</label>

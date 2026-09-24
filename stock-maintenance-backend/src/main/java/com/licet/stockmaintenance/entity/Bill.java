@@ -1,5 +1,6 @@
 package com.licet.stockmaintenance.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -28,6 +29,11 @@ public class Bill {
 
     @OneToOne(mappedBy = "bill", cascade = CascadeType.ALL, orphanRemoval = true)
     private Payment payment;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Bill() {
     }
@@ -70,5 +76,13 @@ public class Bill {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

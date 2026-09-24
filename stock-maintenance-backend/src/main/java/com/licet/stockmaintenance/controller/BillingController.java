@@ -25,7 +25,8 @@ public class BillingController {
         try {
             Bill bill = billingService.createBill(
                     request.getItems(),
-                    request.getPaymentMethod()
+                    request.getPaymentMethod(),
+                    request.getCustomerID()
             );
 
             return ResponseEntity.ok(bill);
@@ -41,6 +42,8 @@ public class BillingController {
 
         private List<BillingService.BillRequestItem> items;
         private String paymentMethod;
+        private Long customerID;
+        
 
         public BillRequest() {
         }
@@ -60,5 +63,14 @@ public class BillingController {
         public void setPaymentMethod(String paymentMethod) {
             this.paymentMethod = paymentMethod;
         }
+
+        public Long getCustomerID() {
+            return customerID;
+        }
+
+        public void setCustomerID(Long customerID) {
+            this.customerID = customerID;
+        }
+
     }
 }

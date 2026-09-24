@@ -5,6 +5,8 @@ import com.licet.stockmaintenance.entity.BillItem;
 import com.licet.stockmaintenance.entity.Inventory;
 import com.licet.stockmaintenance.entity.Payment;
 import com.licet.stockmaintenance.entity.Product;
+import com.licet.stockmaintenance.entity.Customer;
+import com.licet.stockmaintenance.repository.CustomerRepository;
 import com.licet.stockmaintenance.repository.BillRepository;
 import com.licet.stockmaintenance.repository.InventoryRepository;
 import com.licet.stockmaintenance.repository.ProductRepository;
@@ -22,18 +24,21 @@ public class BillingService {
     private final BillRepository billRepository;
     private final ProductRepository productRepository;
     private final InventoryRepository inventoryRepository;
+    private final CustomerRepository customerRepository;
 
     public BillingService(
             BillRepository billRepository,
             ProductRepository productRepository,
-            InventoryRepository inventoryRepository) {
+            InventoryRepository inventoryRepository,
+            CustomerRepository customerRepository) {
         this.billRepository = billRepository;
         this.productRepository = productRepository;
         this.inventoryRepository = inventoryRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Transactional
-    public Bill createBill(List<BillRequestItem> items, String paymentMethod) {
+    public Bill createBill(List<BillRequestItem> items, String paymentMethod, Long customerID) {
 
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException("Bill must contain at least one product.");
@@ -45,6 +50,15 @@ public class BillingService {
 
         Bill bill = new Bill();
         bill.setBillDate(LocalDateTime.now());
+
+        if (customerID != null) {
+            Customer customer = customerRepository.findById(customerID)
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "Customer not found: " + customerID
+                    ));
+
+            bill.setCustomer(customer);
+        }
 
         List<BillItem> billItems = new ArrayList<>();
         BigDecimal totalAmount = BigDecimal.ZERO;
