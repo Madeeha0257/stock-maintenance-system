@@ -3,6 +3,8 @@ import Inventory from "./components/Inventory";
 import AddProduct from "./components/AddProduct";
 import Login from "./components/Login";
 import Billing from "./components/Billing";
+import Dashboard from "./components/Dashboard";
+import Sales from "./components/Sales";
 import "./App.css";
 
 function App() {
@@ -143,14 +145,7 @@ function App() {
       </aside>
 
       <main className="main-content">
-        {page === "dashboard" && (
-          <div className="page-message">
-            <h1>Welcome, {user.username}</h1>
-            <p>
-              You are logged in as {user.role === "OWNER" ? "Shop Owner" : "Cashier"}.
-            </p>
-          </div>
-        )}
+        {page === "dashboard" && <Dashboard />}
 
         {page === "inventory" && isOwner && (
           <Inventory onAddProduct={() => setPage("add-product")} />
@@ -165,11 +160,7 @@ function App() {
 
         {page === "billing" && <Billing />}
 
-        {page === "sales" && isOwner && (
-          <div className="page-message">
-            Sales will be implemented later.
-          </div>
-        )}
+        {page === "sales" && isOwner && <Sales />}
 
         {page === "reports" && isOwner && (
           <div className="page-message">
