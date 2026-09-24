@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import Sales from "./components/Sales";
 import Customers from "./components/Customers";
 import Dealers from "./components/Dealers";
+import LowStockAlerts from "./components/LowStockAlerts";
 import PurchaseOrders from "./components/PurchaseOrders";
 
 import "./App.css";
@@ -178,11 +179,7 @@ function App() {
 
         {page === "purchase-orders" && isOwner && <PurchaseOrders />}
 
-        {page === "low-stock" && isOwner && (
-          <div className="page-message">
-            Low Stock Alerts will be implemented later.
-          </div>
-        )}
+        {page === "low-stock" && isOwner && <LowStockAlerts />}
       </main>
     </div>
   );
