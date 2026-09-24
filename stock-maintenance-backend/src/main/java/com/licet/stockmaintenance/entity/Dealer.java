@@ -1,6 +1,7 @@
 package com.licet.stockmaintenance.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Dealer {
     @Column(nullable = false)
     private String address;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "dealer")
     private List<Product> products = new ArrayList<>();
 
