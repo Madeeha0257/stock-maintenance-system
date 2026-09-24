@@ -72,6 +72,7 @@ public class ProductService {
             existingProduct.setCategory(updatedProduct.getCategory());
             existingProduct.setUnitPrice(updatedProduct.getUnitPrice());
             existingProduct.setQuantity(updatedProduct.getQuantity());
+            existingProduct.setDealer(updatedProduct.getDealer());
 
             Product savedProduct = productRepository.save(existingProduct);
 
