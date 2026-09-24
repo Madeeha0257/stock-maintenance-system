@@ -235,3 +235,7 @@
 .login-card .error-message {
   margin-bottom: 16px;
 }
+
+.dealer-field {
+  grid-column: 1 / -1;
+}

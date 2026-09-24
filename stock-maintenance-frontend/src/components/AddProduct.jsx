@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function AddProduct({ onCancel, onProductAdded }) {
   const [formData, setFormData] = useState({
@@ -6,11 +6,30 @@ function AddProduct({ onCancel, onProductAdded }) {
     category: "",
     unitPrice: "",
     quantity: "",
+    dealerID: "",
   });
 
+  const [dealers, setDealers] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/dealers")
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error("Unable to load dealers.");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setDealers(data);
+      })
+      .catch(() => {
+        setError("Unable to load dealers. Please try again.");
+      });
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,17 +78,22 @@ function AddProduct({ onCancel, onProductAdded }) {
     setSaving(true);
 
     try {
+      const productData = {
+        productName,
+        category,
+        unitPrice,
+        quantity,
+        dealer: formData.dealerID
+          ? { dealerID: Number(formData.dealerID) }
+          : null,
+      };
+
       const response = await fetch("/api/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          productName,
-          category,
-          unitPrice,
-          quantity,
-        }),
+        body: JSON.stringify(productData),
       });
 
       const responseText = await response.text();
@@ -87,6 +111,7 @@ function AddProduct({ onCancel, onProductAdded }) {
         category: "",
         unitPrice: "",
         quantity: "",
+        dealerID: "",
       });
 
       setTimeout(() => {
@@ -172,6 +197,28 @@ function AddProduct({ onCancel, onProductAdded }) {
                 value={formData.quantity}
                 onChange={handleChange}
               />
+            </div>
+
+            <div className="form-group dealer-field">
+              <label htmlFor="dealerID">Dealer</label>
+
+              <select
+                id="dealerID"
+                name="dealerID"
+                value={formData.dealerID}
+                onChange={handleChange}
+              >
+                <option value="">Not assigned</option>
+
+                {dealers.map((dealer) => (
+                  <option
+                    key={dealer.dealerID}
+                    value={dealer.dealerID}
+                  >
+                    {dealer.dealerName}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
