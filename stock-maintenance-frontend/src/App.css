@@ -182,3 +182,56 @@
     border-right-color: var(--border);
   }
 }
+
+/* Login Page */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f5f7fb;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.1);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-header h1 {
+  color: #1d4ed8;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.login-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.login-card .form-group {
+  margin-bottom: 20px;
+}
+
+.login-card .form-group input {
+  width: 100%;
+}
+
+.login-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.login-card .error-message {
+  margin-bottom: 16px;
+}
