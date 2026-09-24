@@ -158,6 +158,7 @@ function Inventory({ onAddProduct }) {
                   <th>Unit Price</th>
                   <th>Stock Quantity</th>
                   <th>Stock Status</th>
+                  <th>Dealer</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -189,6 +190,10 @@ function Inventory({ onAddProduct }) {
                         >
                           {stockStatus}
                         </span>
+                      </td>
+
+                      <td>
+                        {product.dealer?.dealerName ?? "Not assigned"}
                       </td>
 
                       <td>

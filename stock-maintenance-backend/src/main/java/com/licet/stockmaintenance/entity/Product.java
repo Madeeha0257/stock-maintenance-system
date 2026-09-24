@@ -2,8 +2,10 @@ package com.licet.stockmaintenance.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+
 
 @Entity
 @Table(name = "product")
@@ -29,7 +31,7 @@ public class Product {
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Inventory inventory;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"products"})
     @ManyToOne
     @JoinColumn(name = "dealer_id")
     private Dealer dealer;
