@@ -431,3 +431,148 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Billing Page */
+
+.billing-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.billing-products-card,
+.billing-cart-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+}
+
+.billing-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.billing-product-row {
+  display: grid;
+  grid-template-columns: 1.5fr auto auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.billing-product-row > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.billing-product-row > div:first-child span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.billing-product-price {
+  font-weight: 600;
+}
+
+.billing-product-stock {
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.billing-cart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.billing-cart-row {
+  display: grid;
+  grid-template-columns: 1.5fr 80px auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.billing-cart-product {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.billing-cart-product span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.quantity-input {
+  width: 70px;
+  padding: 9px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.billing-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 2px solid #e5e7eb;
+  font-size: 18px;
+}
+
+.billing-total strong {
+  color: #1d4ed8;
+  font-size: 24px;
+}
+
+.payment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-section label {
+  font-weight: 600;
+}
+
+.payment-section select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.complete-bill-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+@media (max-width: 1100px) {
+  .billing-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .billing-product-row {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-cart-row {
+    grid-template-columns: 1fr;
+  }
+
+  .quantity-input {
+    width: 100%;
+  }
+}

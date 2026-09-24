@@ -2,6 +2,7 @@ import { useState } from "react";
 import Inventory from "./components/Inventory";
 import AddProduct from "./components/AddProduct";
 import Login from "./components/Login";
+import Billing from "./components/Billing";
 import "./App.css";
 
 function App() {
@@ -162,11 +163,7 @@ function App() {
           />
         )}
 
-        {page === "billing" && (
-          <div className="page-message">
-            Billing will be implemented in the next milestone.
-          </div>
-        )}
+        {page === "billing" && <Billing />}
 
         {page === "sales" && isOwner && (
           <div className="page-message">
