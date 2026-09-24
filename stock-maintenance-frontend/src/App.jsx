@@ -6,6 +6,7 @@ import Billing from "./components/Billing";
 import Dashboard from "./components/Dashboard";
 import Sales from "./components/Sales";
 import Customers from "./components/Customers";
+import Dealers from "./components/Dealers";
 import "./App.css";
 
 function App() {
@@ -169,11 +170,7 @@ function App() {
           </div>
         )}
 
-        {page === "dealers" && isOwner && (
-          <div className="page-message">
-            Dealer Management will be implemented later.
-          </div>
-        )}
+        {page === "dealers" && isOwner && <Dealers />}
 
         {page === "customers" && <Customers />}
 
