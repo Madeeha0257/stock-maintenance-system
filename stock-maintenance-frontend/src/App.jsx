@@ -9,6 +9,7 @@ import Customers from "./components/Customers";
 import Dealers from "./components/Dealers";
 import LowStockAlerts from "./components/LowStockAlerts";
 import PurchaseOrders from "./components/PurchaseOrders";
+import Reports from "./components/Reports";
 
 import "./App.css";
 
@@ -167,11 +168,8 @@ function App() {
 
         {page === "sales" && isOwner && <Sales />}
 
-        {page === "reports" && isOwner && (
-          <div className="page-message">
-            Reports will be implemented later.
-          </div>
-        )}
+        {page === "reports"&&  isOwner && <Reports />}
+    
 
         {page === "dealers" && isOwner && <Dealers />}
 

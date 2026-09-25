@@ -8,4 +8,8 @@ import java.util.List;
 public interface BillRepository extends JpaRepository<Bill, Long> {
 
     List<Bill> findByCustomerCustomerID(Long customerID);
+    List<Bill> findByBillDateBetween(
+            java.time.LocalDateTime startDate,
+            java.time.LocalDateTime endDate
+    );
 }
