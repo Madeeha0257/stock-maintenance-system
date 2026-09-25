@@ -4,6 +4,7 @@ function AddProduct({ onCancel, onProductAdded }) {
   const [formData, setFormData] = useState({
     productName: "",
     category: "",
+    costPrice: "",
     unitPrice: "",
     quantity: "",
     dealerID: "",
@@ -50,6 +51,7 @@ function AddProduct({ onCancel, onProductAdded }) {
     const category = formData.category.trim();
     const unitPrice = Number(formData.unitPrice);
     const quantity = Number(formData.quantity);
+    const costPrice = Number(formData.costPrice);
 
     if (!productName) {
       setError("Product name cannot be empty.");
@@ -60,6 +62,16 @@ function AddProduct({ onCancel, onProductAdded }) {
       setError("Category cannot be empty.");
       return;
     }
+
+    if (
+        formData.costPrice === "" ||
+        Number.isNaN(costPrice) ||
+        costPrice < 0
+    ){
+        setError("Cost price must be greater than or equal to 0.");
+        return;
+    }
+
 
     if (!formData.unitPrice || unitPrice <= 0) {
       setError("Unit price must be greater than 0.");
@@ -81,12 +93,13 @@ function AddProduct({ onCancel, onProductAdded }) {
       const productData = {
         productName,
         category,
+        costPrice,
         unitPrice,
         quantity,
         dealer: formData.dealerID
-          ? { dealerID: Number(formData.dealerID) }
-          : null,
-      };
+            ? { dealerID: Number(formData.dealerID) }
+            : null,
+        };
 
       const response = await fetch("/api/products", {
         method: "POST",
@@ -109,6 +122,7 @@ function AddProduct({ onCancel, onProductAdded }) {
       setFormData({
         productName: "",
         category: "",
+        costPrice: "",
         unitPrice: "",
         quantity: "",
         dealerID: "",
@@ -168,6 +182,21 @@ function AddProduct({ onCancel, onProductAdded }) {
                 onChange={handleChange}
               />
             </div>
+
+            <div className="form-group">
+                <label htmlFor="costPrice">Cost Price (₹)</label>
+
+                <input
+                    id="costPrice"
+                    name="costPrice"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="Enter cost price"
+                    value={formData.costPrice}
+                    onChange={handleChange}
+                />
+                </div>
 
             <div className="form-group">
               <label htmlFor="unitPrice">Unit Price (₹)</label>

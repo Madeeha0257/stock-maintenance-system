@@ -34,6 +34,10 @@ public class ProductService {
             throw new IllegalArgumentException("Category cannot be empty");
         }
 
+        if (product.getCostPrice() == null || product.getCostPrice().compareTo(java.math.BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Cost price must be greater than or equal to 0");
+        }
+
         if (product.getUnitPrice() == null || product.getUnitPrice().compareTo(java.math.BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Unit price must be greater than 0");
         }
@@ -68,11 +72,37 @@ public class ProductService {
 
         return productRepository.findById(id).map(existingProduct -> {
 
-            existingProduct.setProductName(updatedProduct.getProductName());
-            existingProduct.setCategory(updatedProduct.getCategory());
-            existingProduct.setUnitPrice(updatedProduct.getUnitPrice());
-            existingProduct.setQuantity(updatedProduct.getQuantity());
-            existingProduct.setDealer(updatedProduct.getDealer());
+        if (updatedProduct.getProductName() == null ||
+                updatedProduct.getProductName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Product name cannot be empty");
+        }
+
+        if (updatedProduct.getCategory() == null ||
+                updatedProduct.getCategory().trim().isEmpty()) {
+            throw new IllegalArgumentException("Category cannot be empty");
+        }
+
+        if (updatedProduct.getCostPrice() == null ||
+                updatedProduct.getCostPrice().compareTo(java.math.BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Cost price must be greater than or equal to 0");
+        }
+
+        if (updatedProduct.getUnitPrice() == null ||
+                updatedProduct.getUnitPrice().compareTo(java.math.BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Unit price must be greater than 0");
+        }
+
+        if (updatedProduct.getQuantity() == null ||
+                updatedProduct.getQuantity() < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+
+        existingProduct.setProductName(updatedProduct.getProductName());
+        existingProduct.setCategory(updatedProduct.getCategory());
+        existingProduct.setCostPrice(updatedProduct.getCostPrice());
+        existingProduct.setUnitPrice(updatedProduct.getUnitPrice());
+        existingProduct.setQuantity(updatedProduct.getQuantity());
+        existingProduct.setDealer(updatedProduct.getDealer());
 
             Product savedProduct = productRepository.save(existingProduct);
 

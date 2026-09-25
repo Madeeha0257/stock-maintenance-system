@@ -132,7 +132,13 @@ function PurchaseOrders() {
       return;
     }
 
-    const unitPrice = Number(product.unitPrice);
+    const unitPrice = Number(product.costPrice);
+
+    if (unitPrice <= 0) {
+    setError("Product cost price is not set");
+    return;
+    }
+
     const subtotal = unitPrice * quantity;
 
     setItems([

@@ -59,6 +59,17 @@ function Inventory({ onAddProduct }) {
     return product.inventory?.stockQuantity ?? 0;
   };
 
+  const getStockValue = (product) => {
+    const stockQuantity = getStockQuantity(product);
+    const costPrice = Number(product.costPrice ?? 0);
+
+    if (costPrice === 0) {
+        return null;
+    }
+
+    return stockQuantity * costPrice;
+ };
+
   const getStockStatus = (stockQuantity) => {
     if (stockQuantity === 0) {
       return "Out of Stock";
@@ -155,8 +166,10 @@ function Inventory({ onAddProduct }) {
                   <th>ID</th>
                   <th>Product Name</th>
                   <th>Category</th>
+                  <th>Cost Price</th>
                   <th>Unit Price</th>
                   <th>Stock Quantity</th>
+                  <th>Stock Value</th>
                   <th>Stock Status</th>
                   <th>Dealer</th>
                   <th>Actions</th>
@@ -167,6 +180,7 @@ function Inventory({ onAddProduct }) {
                 {filteredProducts.map((product) => {
                   const stockQuantity = getStockQuantity(product);
                   const stockStatus = getStockStatus(stockQuantity);
+                  const stockValue = getStockValue(product);
 
                   return (
                     <tr key={product.productID}>
@@ -178,9 +192,21 @@ function Inventory({ onAddProduct }) {
 
                       <td>{product.category}</td>
 
-                      <td>₹{Number(product.unitPrice).toFixed(2)}</td>
+                        <td>
+                        {Number(product.costPrice ?? 0) === 0
+                            ? "Not set"
+                            : `₹${Number(product.costPrice).toFixed(2)}`}
+                        </td>
 
-                      <td>{stockQuantity}</td>
+                        <td>₹{Number(product.unitPrice).toFixed(2)}</td>
+
+                        <td>{stockQuantity}</td>
+
+                        <td>
+                        {stockValue === null
+                            ? "Not set"
+                            : `₹${stockValue.toFixed(2)}`}
+                        </td>
 
                       <td>
                         <span

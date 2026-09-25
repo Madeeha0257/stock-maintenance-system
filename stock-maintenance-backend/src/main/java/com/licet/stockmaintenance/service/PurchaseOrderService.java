@@ -103,11 +103,11 @@ public class PurchaseOrderService {
                             )
                     );
 
-            BigDecimal unitPrice = product.getUnitPrice();
+            BigDecimal unitPrice = product.getCostPrice();
 
-            if (unitPrice == null) {
+            if (unitPrice == null || unitPrice.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException(
-                        "Product unit price is not available"
+                        "Product cost price is not available"
                 );
             }
 

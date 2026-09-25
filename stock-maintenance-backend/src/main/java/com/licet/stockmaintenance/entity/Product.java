@@ -24,8 +24,12 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal unitPrice;
 
+    @Column(nullable = false, precision = 38, scale = 2)
+    private BigDecimal costPrice;
+
     @Column(nullable = false)
     private Integer quantity;
+    
 
     @JsonManagedReference
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -94,4 +98,12 @@ public class Product {
     public void setDealer(Dealer dealer) {
         this.dealer = dealer;
     }
+
+    public BigDecimal getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(BigDecimal costPrice) {
+        this.costPrice = costPrice;
+}
 }
