@@ -234,6 +234,7 @@ function AddProduct({ onCancel, onProductAdded }) {
               <select
                 id="dealerID"
                 name="dealerID"
+                className="form-select"
                 value={formData.dealerID}
                 onChange={handleChange}
               >
